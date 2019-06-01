@@ -1,11 +1,9 @@
 # Works with Python 3.6
-import os
 import random
 import asyncio
 import discord
 from discord.ext import commands  # Used to make commands
 
-from keep_alive import keep_alive  # Used to keep it alive on repl.it
 from time_duration import time_duration  # Used to set the duration between sending problems.
 from problem import problem  # Gets an embed of the problem requested via problem id.
 
