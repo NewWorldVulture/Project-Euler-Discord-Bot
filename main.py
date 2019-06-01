@@ -1,7 +1,7 @@
 # Works with Python 3.6
-import os  
+import os
 import random
-import asyncio 
+import asyncio
 import discord
 from discord.ext import commands  # Used to make commands
 
@@ -77,17 +77,17 @@ async def about():
         minutes, hours, or days, with no limit (thanks for taking the hit, repl.it)
 
         For information about Project Euler, see the Project Euler Website: https://projecteuler.net/about
-        For more information about the bot, see here: https://repl.it/@Dersyx/Project-Euler-Discord-Bot""",
+        For more information about the bot, see here: https://github.com/Dersyx/project-euler-discord-bot/tree/master""",
         colour=discord.Colour.blue()
         )  # Embed that's sent back to the user.
 
-    commands = """**Current Prefix:** {}
+    commands_list = """**Current Prefix:** {}
     `about` - Shows this message
     `start <amount>` - Starts the random problem loop with <amount> of delay between each random problem which is specified with <amount>(d, h, m, s). **(Limited to server administrators)**
     `stop` - Stops the random problem loop, if there is a loop in the channel the command is called from. **(Limited to server administrators)**
     `getproblem <id>` - Displays a problem from the Project Euler website based on its number.""".format(PREFIX)
 
-    help_embed.add_field(name="Commands", value=commands)  # Add a field of available commands for the bot.
+    help_embed.add_field(name="Commands", value=commands_list)  # Add a field of available commands for the bot.
 
     await client.say(embed=help_embed)  # Sends the help_embed to the channel the command was called.
 
@@ -103,7 +103,7 @@ async def start(ctx, time_wait):
 
     if ctx.message.channel.id in channel_loop:  # Checks the dictionary for a channel id mating the one where the command is being called.
         await client.send_message(ctx.message.channel, "There is already a Project Euler loop in this channel.")
-    else:  
+    else:
         duration = time_wait[-1:]  # Sets the duration initial equal to the last letter of the provided argument.
         time_wait = str(time_wait).replace("d", "",).replace("h", "").replace("m", "").replace("s", "")  # Removes the last letter set by duration, which should leave a raw int.
 
@@ -129,7 +129,7 @@ async def euler(ctx, time_wait):
 
     for random_problem_number in random_problem_order:
         problem_embed = await problem(client, ctx, random_problem_number)  # Call the problem function with the random_problem_number.
-        await client.send_message(ctx.message.channel, embed=problem_embed)  # Sends the embed returned.   
+        await client.send_message(ctx.message.channel, embed=problem_embed)  # Sends the embed returned.
         await asyncio.sleep(int(time_wait))  # Await n amount of time before going to the next number.
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -160,6 +160,5 @@ async def getproblem(ctx, problem_id):
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# keep_alive()  # Creates a server to keep the bot alive on repl.it
-TOKEN = os.environ.get("token")  # Gets the token via environment variables (.env files on repl.it)
+TOKEN = ""
 client.run(TOKEN)  # Runs the bot
